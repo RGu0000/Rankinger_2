@@ -2,7 +2,7 @@ class MatchesController < ApplicationController
   before_action :set_match, only: %i[edit update]
 
   def index
-    @matches = Match.includes(:player1, :player2)
+    @matches = Match.with_players(:player1, :player2)
   end
 
   def edit
