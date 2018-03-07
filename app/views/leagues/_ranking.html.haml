@@ -1,8 +1,8 @@
 - ranking = Ranking.league_ranking(@league.id)
-%table.table.table-hover
-  %thead
+%table{:border => 1}
+  %tbody
     %tr
-      %th Player
+      %th{align: "center"} Player
       %th P
       %th W
       %th D
@@ -11,17 +11,15 @@
       %th A
       %th D
       %th Pts
-  %tbody
-    %tr
-      - @league.users.each do |user|
-      - user_ranking = ranking.find_by(user_id: user.id)
-        %tr
-          %td= User.find(user_ranking[:user_id]).name
-          %td= user_ranking[:played]
-          %td= user_ranking[:won]
-          %td= user_ranking[:drawn]
-          %td= user_ranking[:lost]
-          %td= user_ranking[:goals_for]
-          %td= user_ranking[:goals_against]
-          %td= user_ranking[:goal_diff]
-          %td= user_ranking[:points]
+    - @league.users.each do |user|
+    - user_ranking = ranking.find_by(user_id: user.id)
+      %tr
+        %td= User.find(user_ranking[:user_id]).name
+        %td= user_ranking[:played]
+        %td= user_ranking[:won]
+        %td= user_ranking[:drawn]
+        %td= user_ranking[:lost]
+        %td= user_ranking[:goals_for]
+        %td= user_ranking[:goals_against]
+        %td= user_ranking[:goal_diff]
+        %td= user_ranking[:points]
