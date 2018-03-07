@@ -1,6 +1,6 @@
-class CreateLeaguesMembers < ActiveRecord::Migration[5.1]
+class CreateLeagueMembers < ActiveRecord::Migration[5.1]
   def change
-    create_table :leagues_members do |t|
+    create_table :league_members do |t|
       t.integer :user_id
       t.integer :league_id
       t.timestamps
