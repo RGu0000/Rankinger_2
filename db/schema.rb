@@ -26,6 +26,13 @@ ActiveRecord::Schema.define(version: 20180301092137) do
     t.index ["profile_id"], name: "index_comments_on_profile_id"
   end
 
+  create_table "league_members", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "league_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "leagues", force: :cascade do |t|
     t.string "name"
     t.string "description"
@@ -34,13 +41,6 @@ ActiveRecord::Schema.define(version: 20180301092137) do
     t.bigint "owner_id"
     t.integer "capacity", default: 4, null: false
     t.index ["owner_id"], name: "index_leagues_on_owner_id"
-  end
-
-  create_table "leagues_members", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "league_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "matches", force: :cascade do |t|
