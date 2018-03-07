@@ -13,8 +13,8 @@ class Match < ApplicationRecord
       .where('league_id = ?', league_id)
       .where('player1_goals IS NOT null AND player2_goals IS NOT null')
   end
-  scope :with_players, -> (player_1, player_2) do
-    where('player_1=? OR player_2 = ?', player_1)
-      .where('player_1=? OR player_2 = ?', player_2)
+  scope :with_players, ->(player1, player2) do
+    where('player_1=? OR player_2 = ?', player1)
+      .where('player_1=? OR player_2 = ?', player2)
   end
 end
