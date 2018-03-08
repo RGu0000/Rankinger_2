@@ -10,6 +10,8 @@ class LeaguesController < ApplicationController
   def show
     @league = League.find(params[:id]).decorate
     @matches = @league.matches.includes(:player1, :player2).decorate
+    @ranking = Ranking.league_ranking(@league.id).includes(:user)
+                      .sort { |first, second| second.points <=> first.points }
   end
 
   def new
