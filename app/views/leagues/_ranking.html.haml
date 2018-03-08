@@ -1,16 +1,16 @@
 - ranking = Ranking.league_ranking(@league.id)
-%table{:border => 1}
+%table{border: 1}
   %tbody
     %tr
-      %th{align: "center"} Player
-      %th P
-      %th W
-      %th D
-      %th L
-      %th F
-      %th A
-      %th D
-      %th Pts
+      %th{style: "text-align:center"} Player
+      %th{style: "text-align:center"} P
+      %th{style: "text-align:center"} W
+      %th{style: "text-align:center"} D
+      %th{style: "text-align:center"} L
+      %th{style: "text-align:center"} F
+      %th{style: "text-align:center"} A
+      %th{style: "text-align:center"} D
+      %th{style: "text-align:center"} Pts
     - @league.users.each do |user|
     - user_ranking = ranking.find_by(user_id: user.id)
       %tr
