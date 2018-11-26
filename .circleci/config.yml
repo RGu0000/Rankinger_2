@@ -19,6 +19,20 @@ jobs:
           root: ~/repo
           paths:
             - .
+  checkout_code2:
+    <<: *defaults
+    steps:
+      - checkout
+
+  checkout_code3:
+    <<: *defaults
+    steps:
+      - checkout
+
+  checkout_code_else:
+    <<: *defaults
+    steps:
+      - checkout
 
   bundle_install:
     <<: *defaults
@@ -49,6 +63,14 @@ workflows:
   test-and-deploy:
     jobs:
       - checkout_code
+      - checkout_code2
+      - checkout_code3:
+        requires:
+            - checkout_code2
       - bundle_install:
           requires:
             - checkout_code            
+            - checkout_code3 
+      - checkout_code_else:
+        requires:
+            - checkout_code2
