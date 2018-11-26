@@ -65,12 +65,12 @@ workflows:
       - checkout_code
       - checkout_code2
       - checkout_code3:
-        requires:
+          requires:
             - checkout_code2
       - bundle_install:
           requires:
             - checkout_code            
             - checkout_code3 
       - checkout_code_else:
-        requires:
+          requires:
             - checkout_code2
