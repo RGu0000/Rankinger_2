@@ -25,6 +25,11 @@ jobs:
     steps:
       - checkout
 
+  checkout_code20:
+    executor: default
+    steps:
+      - checkout
+
   checkout_code_else:
     executor: default
     steps:
