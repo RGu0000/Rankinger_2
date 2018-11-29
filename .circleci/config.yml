@@ -1,0 +1,76 @@
+version: 2
+
+defaults: &defaults
+  working_directory: ~/repo
+  docker:
+    - image: circleci/ruby:2.5.3-node-browsers
+      environment:
+        - RAILS_ENV: test
+        - BUNDLE_JOBS: 4
+        - BUNDLE_RETRY: 3
+        - BUNDLE_PATH: vendor/bundle
+      
+jobs:
+  checkout_code:
+    <<: *defaults
+    steps:
+      - checkout
+      - persist_to_workspace:
+          root: ~/repo
+          paths:
+            - .
+  checkout_code2:
+    <<: *defaults
+    steps:
+      - checkout
+
+  checkout_code3:
+    <<: *defaults
+    steps:
+      - checkout
+
+  checkout_code_else:
+    <<: *defaults
+    steps:
+      - checkout
+
+  bundle_install:
+    <<: *defaults
+    steps:
+      - checkout
+      - run:
+          name: Download CC test reporter
+          command: |
+            mkdir -p ./tmp
+            curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./tmp/cc-test-reporter
+            chmod +x ./tmp/cc-test-reporter
+      - run: gem install bundler
+      - restore-cache:
+          key: gems-v1-{{ checksum "Gemfile.lock" }}
+      - run: bundle install
+      - save-cache:
+          key: gems-v1-{{ checksum "Gemfile.lock" }}
+          paths:
+            - /vendor/bundle
+      - persist_to_workspace:
+          root: ~/repo
+          paths:
+            - vendor/bundle
+            - tmp
+
+workflows:
+  version: 2
+  build_and_deploy:
+    jobs:
+      - checkout_code
+      - checkout_code2
+      - checkout_code3:
+          requires:
+            - checkout_code2
+      - bundle_install:
+          requires:
+            - checkout_code            
+            - checkout_code3 
+      - checkout_code_else:
+          requires:
+            - checkout_code2
