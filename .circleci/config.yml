@@ -1,4 +1,4 @@
-version: 2.1
+version: 2
 
 defaults: &defaults
   working_directory: ~/repo
@@ -63,14 +63,9 @@ workflows:
   build_and_deploy:
     jobs:
       - checkout_code
-      - checkout_code2
-      - checkout_code3:
-          requires:
-            - checkout_code2
       - bundle_install:
           requires:
             - checkout_code            
-            - checkout_code3 
       - checkout_code_else:
           requires:
-            - checkout_code2
+            - checkout_code
