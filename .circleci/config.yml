@@ -24,11 +24,6 @@ jobs:
     steps:
       - checkout
 
-  checkout_code3:
-    <<: *defaults
-    steps:
-      - checkout
-
   checkout_code_else:
     <<: *defaults
     steps:
