@@ -1,18 +1,19 @@
-version: 2
+version: 2.1
 
-defaults: &defaults
-  working_directory: ~/repo
-  docker:
-    - image: circleci/ruby:2.5.3-node-browsers
-      environment:
-        - RAILS_ENV: test
-        - BUNDLE_JOBS: 4
-        - BUNDLE_RETRY: 3
-        - BUNDLE_PATH: vendor/bundle
+executors:
+  default:
+    working_directory: ~/repo
+    docker:
+      - image: circleci/ruby:2.5.3-node-browsers
+        environment:
+          - RAILS_ENV: test
+          - BUNDLE_JOBS: 4
+          - BUNDLE_RETRY: 3
+          - BUNDLE_PATH: vendor/bundle
       
 jobs:
   checkout_code:
-    <<: *defaults
+    executor: default
     steps:
       - checkout
       - persist_to_workspace:
@@ -20,17 +21,17 @@ jobs:
           paths:
             - .
   checkout_code2:
-    <<: *defaults
+    executor: default
     steps:
       - checkout
 
   checkout_code_else:
-    <<: *defaults
+    executor: default
     steps:
       - checkout
 
   bundle_install:
-    <<: *defaults
+    executor: default
     steps:
       - checkout
       - run:
@@ -40,10 +41,10 @@ jobs:
             curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./tmp/cc-test-reporter
             chmod +x ./tmp/cc-test-reporter
       - run: gem install bundler
-      - restore-cache:
+      - restore_cache:
           key: gems-v1-{{ checksum "Gemfile.lock" }}
       - run: bundle install
-      - save-cache:
+      - save_cache:
           key: gems-v1-{{ checksum "Gemfile.lock" }}
           paths:
             - /vendor/bundle
